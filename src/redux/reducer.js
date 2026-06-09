@@ -9,8 +9,8 @@ const initialState = {
   books: [],
   loading: false,
   error: null,
-  sortBy: 'Title',     // Default sort criteria: Title, Author, or Publisher
-  sortOrder: 'Ascending' // Default sort order: Ascending or Descending
+  sortBy: 'Title',     
+  sortOrder: 'Ascending' 
 };
 
 export const booksReducer = (state = initialState, action) => {

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks, setSorting } from '../redux/actions';
-import './BooksList.css';
 
 const BooksList = () => {
   const dispatch = useDispatch();
-  const books = useSelector(state => state.books);
+  
+  // Individual selectors for performance, with a fallback array for 'books'
+  const books = useSelector(state => state.books) || [];
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
   const sortBy = useSelector(state => state.sortBy);
@@ -38,11 +39,9 @@ const BooksList = () => {
 
   return (
     <div className="books-container">
-      {/* Changed to h1 and exact text for Cypress */}
       <h1>Books List</h1>
       
       <div className="sorting-controls">
-        {/* Wrapped in labels to satisfy :nth-child > select and label tests */}
         <label>
           Sort By
           <select value={sortBy} onChange={handleSortByChange}>
