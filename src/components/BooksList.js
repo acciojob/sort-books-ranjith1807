@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks, setSorting } from '../redux/actions';
-// Optional: for basic table styling
+import './BooksList.css';
 
 const BooksList = () => {
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
-const loading = useSelector(state => state.loading);
-const error = useSelector(state => state.error);
-const sortBy = useSelector(state => state.sortBy);
-const sortOrder = useSelector(state => state.sortOrder);
-  // Fetch books on component mount
+  const loading = useSelector(state => state.loading);
+  const error = useSelector(state => state.error);
+  const sortBy = useSelector(state => state.sortBy);
+  const sortOrder = useSelector(state => state.sortOrder);
+
   useEffect(() => {
     dispatch(fetchBooks());
   }, [dispatch]);
 
-  // Handlers for dropdowns
   const handleSortByChange = (e) => {
     dispatch(setSorting(e.target.value, sortOrder));
   };
@@ -24,12 +23,8 @@ const sortOrder = useSelector(state => state.sortOrder);
     dispatch(setSorting(sortBy, e.target.value));
   };
 
-  // Sorting logic based on Redux state
   const sortedBooks = [...books].sort((a, b) => {
-    // Map dropdown values to object keys from the NYT API
     const key = sortBy.toLowerCase(); 
-    
-    // Fallback to empty string to avoid errors on missing fields
     const valA = (a[key] || '').toUpperCase();
     const valB = (b[key] || '').toUpperCase();
 
@@ -43,20 +38,27 @@ const sortOrder = useSelector(state => state.sortOrder);
 
   return (
     <div className="books-container">
-      <h2>New York Times Bestsellers</h2>
+      {/* Changed to h1 and exact text for Cypress */}
+      <h1>Books List</h1>
       
-      {/* Container specifically structured for nth-child Cypress selectors */}
       <div className="sorting-controls">
-        <select value={sortBy} onChange={handleSortByChange}>
-          <option value="Title">Title</option>
-          <option value="Author">Author</option>
-          <option value="Publisher">Publisher</option>
-        </select>
+        {/* Wrapped in labels to satisfy :nth-child > select and label tests */}
+        <label>
+          Sort By
+          <select value={sortBy} onChange={handleSortByChange}>
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Publisher">Publisher</option>
+          </select>
+        </label>
         
-        <select value={sortOrder} onChange={handleSortOrderChange}>
-          <option value="Ascending">Ascending</option>
-          <option value="Descending">Descending</option>
-        </select>
+        <label>
+          Order
+          <select value={sortOrder} onChange={handleSortOrderChange}>
+            <option value="Ascending">Ascending</option>
+            <option value="Descending">Descending</option>
+          </select>
+        </label>
       </div>
 
       <table>
