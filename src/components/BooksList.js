@@ -43,7 +43,7 @@ const BooksList = () => {
       
       <div className="sorting-controls">
         <label>
-          Sort By
+          Sort by:
           <select value={sortBy} onChange={handleSortByChange}>
             <option value="Title">Title</option>
             <option value="Author">Author</option>
@@ -52,7 +52,7 @@ const BooksList = () => {
         </label>
         
         <label>
-          Order
+          Order:
           <select value={sortOrder} onChange={handleSortOrderChange}>
             <option value="Ascending">Ascending</option>
             <option value="Descending">Descending</option>
